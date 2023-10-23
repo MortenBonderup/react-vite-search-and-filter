@@ -16,7 +16,7 @@ export default function Drink({ drink }) {
 
     // RMK & SD
     return (
-        <section className="op-wrap" style={{ width: "200px" }}>
+        <section className="op-wrap" style={{ width: "200px", border: "1px solid black" }}>
 
             <img className="opimg" src={drink.billede} alt="Billede af drink" style={{ width: "200px" }} />
             <div className="fixedMargin">

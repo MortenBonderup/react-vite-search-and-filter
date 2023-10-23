@@ -4,7 +4,7 @@ export default function Nav() {
     return (
         <nav>
             <NavLink to="/">Søgning</NavLink>
-            <NavLink to="/about">About</NavLink>
+            <NavLink to="/about">Filtrer</NavLink>
             <NavLink to="/contact">Contact</NavLink>
         </nav>
     );

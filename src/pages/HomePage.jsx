@@ -39,15 +39,25 @@ export default function HomePage() {
     }, []);
 
 
+    function reset() {
+        setSkyggeDrinksListe(drinks);
+        setSoegeTekst("");
+        setIsDrinks(false);
+    }
+
+
     function haandterSubmit(e) {
         e.preventDefault();
-        let soegeResultat = drinks.filter((drink) => drink.navn.toLowerCase().includes(soegeTekst.toLowerCase()) || drink.ingredienser.find(ingrediens => ingrediens.includes(soegeTekst.toLowerCase())));
+        let soegeResultat = drinks.filter((drink) => {
+            const s1=drink.navn.toLowerCase().includes(soegeTekst.toLowerCase()); // Søg i drink navn
+            const s2=drink.ingredienser.find(ingrediens => ingrediens.toLowerCase().includes(soegeTekst.toLowerCase())); // Søg blandt ingredienser
+            return s1 || s2; // Hvis enten s1 eller s2 er sand, så eksisterer søgeteksten i drink navn eller ingredienser
+        }) 
 
-        // console.log(drinks.find((drink => drink.ingredienser.includes(soegeTekst.toLowerCase()))));
-
-        if (soegeResultat === 0) {  // Er der ingen drinks som matcher søgetekst, så er der ingen drinks at vise
+        if (soegeResultat.length === 0) {  // Er der ingen drinks som matcher søgetekst, så er der ingen drinks at vise
             setIsDrinks(false);
         } else {
+            setIsDrinks(true);
             setSkyggeDrinksListe(soegeResultat); // Sæt skyggelisten lig med resultat af søgning
         }
     }
@@ -56,7 +66,10 @@ export default function HomePage() {
     //Hvis "isDrinks" er "true", vises en liste af drinks vha. "map" funktionen, ellers vises en besked om, at der ikke er noget at vise.
     return (
         <article className="page">
-            <form onSubmit={haandterSubmit}><input type="search" required value={soegeTekst} onChange={e => setSoegeTekst(e.target.value)}></input><button type="submit">Søg</button></form>
+            <form onSubmit={haandterSubmit}><input type="search" required value={soegeTekst} onChange={e => setSoegeTekst(e.target.value)} />
+                <button type="submit">Søg</button>
+                <button type="button" onClick={reset}>Reset</button>
+            </form>
             {isDrinks ? (
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginTop: "10px" }}>
                     {skyggeDrinksListe.map((drink) => (
