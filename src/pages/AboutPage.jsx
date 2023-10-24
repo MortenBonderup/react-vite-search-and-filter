@@ -56,26 +56,29 @@ export default function AboutPage() {
 
     function haandterAktiver(e) {
         e.preventDefault();
-        let soegeResultat = [];
+        
+        // setSkyggeDrinksListe(drinks);
+        setIsDrinks(true);
+
         let temp = [];
+        let soegeResultatListe = drinks;
+
        
         for (const soegeord of soegeOrdsListe) {
-            temp = drinks.filter((drink) => {
+            temp = soegeResultatListe.filter((drink) => {
                 const s1=drink.navn.toLowerCase().includes(soegeord.toLowerCase()); // Søg i drink navn
                 const s2=drink.ingredienser.find(ingrediens => ingrediens.toLowerCase().includes(soegeord.toLowerCase())); // Søg blandt ingredienser
                 return s1 || s2; // Hvis enten s1 eller s2 er sand, så eksisterer søgeordet i drink navn eller ingredienser
             })
-
-            soegeResultat = soegeResultat.concat(temp); // Lægger temp listen til soegeResultatlisten
+           
+            soegeResultatListe = temp;
         }
 
-        if (soegeResultat.length === 0) {  // Er der ingen drinks som matcher søgetekst, så er der ingen drinks at vise
+        if (skyggeDrinksListe.length === 0) {  // Er der ingen drinks som matcher , så er der ingen drinks at vise
             setIsDrinks(false);
         } else {
-            setIsDrinks(true);
-            setSkyggeDrinksListe(soegeResultat); // Sæt skyggelisten lig med resultat af søgning
+            setSkyggeDrinksListe(soegeResultatListe);
         }
-
     }
 
 

@@ -42,7 +42,7 @@ export default function HomePage() {
     function reset() {
         setSkyggeDrinksListe(drinks);
         setSoegeTekst("");
-        setIsDrinks(false);
+        setIsDrinks(true);
     }
 
 
