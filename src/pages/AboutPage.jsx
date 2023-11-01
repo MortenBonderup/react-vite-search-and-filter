@@ -40,7 +40,7 @@ export default function AboutPage() {
 
 
     function haandterCheckboks(e) {
-        const checkboksStatus= e.currentTarget.checked; // er true(checked) eller false(ikke checked)
+        const checkboksStatus = e.currentTarget.checked; // er true(checked) eller false(ikke checked)
         const soegeord = e.currentTarget.getAttribute("data-soegeord"); // gemmer på søgeordet
         if (checkboksStatus) {
             soegeOrdsListe.push(soegeord); // Indsætter søgeordet på søgeordslisten
@@ -56,25 +56,25 @@ export default function AboutPage() {
 
     function haandterAktiver(e) {
         e.preventDefault();
-        
+
         // setSkyggeDrinksListe(drinks);
         setIsDrinks(true);
 
         let temp = [];
-        let soegeResultatListe = drinks;
+        let soegeResultatListe = [...drinks]; // Laver en kopi af drinks
 
-       
+
         for (const soegeord of soegeOrdsListe) {
             temp = soegeResultatListe.filter((drink) => {
-                const s1=drink.navn.toLowerCase().includes(soegeord.toLowerCase()); // Søg i drink navn
-                const s2=drink.ingredienser.find(ingrediens => ingrediens.toLowerCase().includes(soegeord.toLowerCase())); // Søg blandt ingredienser
+                const s1 = drink.navn.toLowerCase().includes(soegeord.toLowerCase()); // Søg i drink navn
+                const s2 = drink.ingredienser.find(ingrediens => ingrediens.toLowerCase().includes(soegeord.toLowerCase())); // Søg blandt ingredienser
                 return s1 || s2; // Hvis enten s1 eller s2 er sand, så eksisterer søgeordet i drink navn eller ingredienser
             })
-           
-            soegeResultatListe = temp;
+
+            soegeResultatListe = [...temp]; // Laver en kopi af temp
         }
 
-        if (skyggeDrinksListe.length === 0) {  // Er der ingen drinks som matcher , så er der ingen drinks at vise
+        if (soegeResultatListe.length === 0) {  // Er der ingen drinks som matcher , så er der ingen drinks at vise
             setIsDrinks(false);
         } else {
             setSkyggeDrinksListe(soegeResultatListe);
@@ -95,7 +95,7 @@ export default function AboutPage() {
             {isDrinks ? (
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginTop: "10px" }}>
                     {skyggeDrinksListe.map((drink) => (
-                      <Drink key={drink.id} drink={drink} /> 
+                        <Drink key={drink.id} drink={drink} />
                     ))}
                 </div>
             ) : (
